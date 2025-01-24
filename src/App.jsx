@@ -1,21 +1,32 @@
 import React, { useState } from "react";
 import "./App.css";
 
+// Lista de músicas com a URL de arquivos locais
 const songs = [
-  { title: "Norah Jones - Don't Know Why", url: "https://www.youtube.com/embed/tO4dxvguQDk" },
-  { title: "Etta James - At Last", url: "https://www.youtube.com/embed/1qJU8G7gR_g" },
-  { title: "Billie Holiday - Blue Moon", url: "https://www.youtube.com/embed/y4bZu56EylA" },
-  { title: "Billy Joel - Piano Man", url: "https://www.youtube.com/embed/QwVjTlTdIDQ" },
-  { title: "Frank Sinatra - Fly Me to the Moon", url: "https://www.youtube.com/embed/ZEcqHA7dbwM" },
-  { title: "Diana Krall - The Look of Love", url: "https://www.youtube.com/embed/Yr8xDSPjII8" },
-  { title: "Madeleine Peyroux - Dance Me to the End of Love", url: "https://www.youtube.com/embed/n2m_3OQtFNc" },
-  { title: "Eva Cassidy - Fields of Gold", url: "https://www.youtube.com/embed/9UVjjcOUJLE" },
-  { title: "Sade - Smooth Operator", url: "https://www.youtube.com/embed/rS7Va0sBYAM" },
-  { title: "John Coltrane & Duke Ellington - In a Sentimental Mood", url: "https://www.youtube.com/embed/sCQfTNOC5aE" },
+  { title: "Norah Jones - Don't Know Why", url: "/Music/Norah Jones - Don't Know Why.mp3" },
+  { title: "Etta James - At Last", url: "/Music/Etta James - At Last.mp3" },
+  { title: "Billie Holiday - Blue Moon", url: "/Music/Billie Holiday - Blue Moon.mp3" },
+  { title: "Billy Joel - Piano Man", url: "/Music/Billy Joel - Piano Man.mp3" },
+  { title: "Frank Sinatra - Fly Me to the Moon", url: "/Music/Frank Sinatra - Fly Me to the Moon.mp3" },
+  { title: "Diana Krall - The Look of Love", url: "/Music/Diana Krall - The Look of Love.mp3" },
+  { title: "Madeleine Peyroux - Dance Me to the End of Love", url: "/Music/Madeleine Peyroux - Dance Me to the End of Love.mp3" },
+  { title: "Eva Cassidy - Fields of Gold", url: "/Music/Eva Cassidy - Fields of Gold.mp3" },
 ];
 
 export default function App() {
-  const [currentSong, setCurrentSong] = useState(null);
+  const [currentSongIndex, setCurrentSongIndex] = useState(null);
+
+  const handleSongClick = (index) => {
+    setCurrentSongIndex(index);
+  };
+
+  const handleSongEnd = () => {
+    // Toca a próxima música automaticamente
+    setCurrentSongIndex((prevIndex) => {
+      const nextIndex = (prevIndex + 1) % songs.length; // Volta para o início após a última música
+      return nextIndex;
+    });
+  };
 
   return (
     <div className="app-container">
@@ -23,12 +34,12 @@ export default function App() {
       <div className="content-container">
         {/* Coluna da esquerda - Lista de músicas */}
         <div className="left-section">
-          <h1 className="title">10 Músicas para Curtir Sexta à Noite com um Bom Vinho</h1>
+          <h1 className="title">Wine Night Music</h1>
           <ul className="song-list">
             {songs.map((song, index) => (
               <li key={index} className="song-item">
                 <button
-                  onClick={() => setCurrentSong(song.url)}
+                  onClick={() => handleSongClick(index)}
                   className="song-button"
                 >
                   {song.title}
@@ -38,16 +49,33 @@ export default function App() {
           </ul>
         </div>
 
-        {/* Coluna da direita - Player do YouTube */}
+        {/* Coluna da direita - Player de áudio */}
         <div className="right-section">
-          {currentSong ? (
-            <iframe
-              src={currentSong}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+          {currentSongIndex !== null ? (
+            <>
+              {/* GIF */}
+              <div className="gif-container">
+                <img
+                  src="./GIF/vinho.gif" // Caminho para o GIF local
+                  alt="music-playing-gif"
+                  className="music-gif"
+                />
+              </div>
+              
+              {/* Player de áudio */}
+              <audio
+                controls
+                autoPlay
+                onEnded={handleSongEnd}
+                key={songs[currentSongIndex].url}
+              >
+                <source src={songs[currentSongIndex].url} type="audio/mp3" />
+                Seu navegador não suporta o formato de áudio.
+              </audio>
+              
+              {/* Nome da música */}
+              <p className="now-playing">Agora tocando: {songs[currentSongIndex].title}</p>
+            </>
           ) : (
             <p>Selecione uma música para começar!</p>
           )}
