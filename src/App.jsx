@@ -3,14 +3,14 @@ import "./App.css";
 
 // Lista de músicas com a URL de arquivos locais
 const songs = [
-  { title: "Norah Jones - Don't Know Why", url: "/Music/Norah Jones - Don't Know Why.mp3" },
-  { title: "Etta James - At Last", url: "/Music/Etta James - At Last.mp3" },
-  { title: "Billie Holiday - Blue Moon", url: "/Music/Billie Holiday - Blue Moon.mp3" },
-  { title: "Billy Joel - Piano Man", url: "/Music/Billy Joel - Piano Man.mp3" },
-  { title: "Frank Sinatra - Fly Me to the Moon", url: "/Music/Frank Sinatra - Fly Me to the Moon.mp3" },
-  { title: "Diana Krall - The Look of Love", url: "/Music/Diana Krall - The Look of Love.mp3" },
-  { title: "Madeleine Peyroux - Dance Me to the End of Love", url: "/Music/Madeleine Peyroux - Dance Me to the End of Love.mp3" },
-  { title: "Eva Cassidy - Fields of Gold", url: "/Music/Eva Cassidy - Fields of Gold.mp3" },
+  { title: "Norah Jones - Don't Know Why", url: "/MUSIC/Norah Jones - Don't Know Why.mp3" },
+  { title: "Etta James - At Last", url: "/MUSIC/Etta James - At Last.mp3" },
+  { title: "Billie Holiday - Blue Moon", url: "/MUSIC/Billie Holiday - Blue Moon.mp3" },
+  { title: "Billy Joel - Piano Man", url: "/MUSIC/Billy Joel - Piano Man.mp3" },
+  { title: "Frank Sinatra - Fly Me to the Moon", url: "/MUSIC/Frank Sinatra - Fly Me to the Moon.mp3" },
+  { title: "Diana Krall - The Look of Love", url: "/MUSIC/Diana Krall - The Look of Love.mp3" },
+  { title: "Madeleine Peyroux - Dance Me to the End of Love", url: "/MUSIC/Madeleine Peyroux - Dance Me to the End of Love.mp3" },
+  { title: "Eva Cassidy - Fields of Gold", url: "/MUSIC/Eva Cassidy - Fields of Gold.mp3" },
 ];
 
 export default function App() {
