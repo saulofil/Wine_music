@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-// Dados das músicas (Agora, só precisamos do videoId)
 const songs = [
-  { title: "Norah Jones - Don't Know Why", videoId: "tO4dxvguQDk" },
-  { title: "Etta James - At Last", videoId: "1qJU8G7gR_g" },
-  { title: "Billie Holiday - Blue Moon", videoId: "y4bZu56EylA" },
-  { title: "Billy Joel - Piano Man", videoId: "QwVjTlTdIDQ" },
-  { title: "Frank Sinatra - Fly Me to the Moon", videoId: "ZEcqHA7dbwM" },
-  { title: "Diana Krall - The Look of Love", videoId: "Yr8xDSPjII8" },
-  { title: "Madeleine Peyroux - Dance Me to the End of Love", videoId: "n2m_3OQtFNc" },
-  { title: "Eva Cassidy - Fields of Gold", videoId: "9UVjjcOUJLE" },
-  { title: "Sade - Smooth Operator", videoId: "rS7Va0sBYAM" },
-  { title: "John Coltrane & Duke Ellington - In a Sentimental Mood", videoId: "sCQfTNOC5aE" },
+  { title: "Norah Jones - Don't Know Why", url: "https://www.youtube.com/embed/tO4dxvguQDk" },
+  { title: "Etta James - At Last", url: "https://www.youtube.com/embed/1qJU8G7gR_g" },
+  { title: "Billie Holiday - Blue Moon", url: "https://www.youtube.com/embed/y4bZu56EylA" },
+  { title: "Billy Joel - Piano Man", url: "https://www.youtube.com/embed/QwVjTlTdIDQ" },
+  { title: "Frank Sinatra - Fly Me to the Moon", url: "https://www.youtube.com/embed/ZEcqHA7dbwM" },
+  { title: "Diana Krall - The Look of Love", url: "https://www.youtube.com/embed/Yr8xDSPjII8" },
+  { title: "Madeleine Peyroux - Dance Me to the End of Love", url: "https://www.youtube.com/embed/n2m_3OQtFNc" },
+  { title: "Eva Cassidy - Fields of Gold", url: "https://www.youtube.com/embed/9UVjjcOUJLE" },
+  { title: "Sade - Smooth Operator", url: "https://www.youtube.com/embed/rS7Va0sBYAM" },
+  { title: "John Coltrane & Duke Ellington - In a Sentimental Mood", url: "https://www.youtube.com/embed/sCQfTNOC5aE" },
 ];
 
 export default function App() {
-  const [currentSongId, setCurrentSongId] = useState(null);
-  const [player, setPlayer] = useState(null);
-
-  useEffect(() => {
-    // Carrega a YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // Função callback da API
-    window.onYouTubeIframeAPIReady = () => {
-      setPlayer(new window.YT.Player('player', {
-        height: '360',
-        width: '640',
-        videoId: '',
-        events: {
-          onReady: onPlayerReady,
-        },
-      }));
-    };
-  }, []);
-
-  const onPlayerReady = (event) => {
-    // Função quando o player estiver pronto
-  };
-
-  // Carrega o vídeo quando uma nova música é selecionada
-  useEffect(() => {
-    if (player && currentSongId) {
-      player.loadVideoById(currentSongId);
-    }
-  }, [currentSongId, player]);
+  const [currentSong, setCurrentSong] = useState(null);
 
   return (
     <div className="app-container">
@@ -61,7 +28,7 @@ export default function App() {
             {songs.map((song, index) => (
               <li key={index} className="song-item">
                 <button
-                  onClick={() => setCurrentSongId(song.videoId)}
+                  onClick={() => setCurrentSong(song.url)}
                   className="song-button"
                 >
                   {song.title}
@@ -73,8 +40,17 @@ export default function App() {
 
         {/* Coluna da direita - Player do YouTube */}
         <div className="right-section">
-          <div id="player"></div>
-          {!currentSongId && <p>Selecione uma música para começar!</p>}
+          {currentSong ? (
+            <iframe
+              src={currentSong}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <p>Selecione uma música para começar!</p>
+          )}
         </div>
       </div>
     </div>
